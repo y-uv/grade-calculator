@@ -62,30 +62,27 @@ public class MainApplication {
                     return;
                 }
                 GradeCalculator calculator = new GradeCalculator();
-                boolean calculationSuccessful = calculator.calculateFinalGrades();
-
                 try {
                     calculator.readStudents(studentFilePath);
                     calculator.readCourseGrades(courseGradeFilePath);
-                    calculator.calculateFinalGrades();
+                    boolean calculationSuccessful = calculator.calculateFinalGrades();
+                    if (!calculationSuccessful) {
+                        return;
+                    }
                     JFileChooser chooser = new JFileChooser();
                     FileNameExtensionFilter filter = new FileNameExtensionFilter("TEXT FILES", "txt", "text");
                     chooser.setFileFilter(filter);
                     chooser.setAcceptAllFileFilterUsed(false);
-                    if (calculationSuccessful) {
-                        if (chooser.showSaveDialog(frame) == JFileChooser.APPROVE_OPTION) {
-                            String savePath = chooser.getSelectedFile().getAbsolutePath();
-                            if (!savePath.toLowerCase().endsWith(".txt")) {
-                                savePath += ".txt";
-                            }
-                            calculator.writeCourseResults(savePath);
-                            JOptionPane.showMessageDialog(frame, "Grades calculated and written to " + savePath);
+                    if (chooser.showSaveDialog(frame) == JFileChooser.APPROVE_OPTION) {
+                        String savePath = chooser.getSelectedFile().getAbsolutePath();
+                        if (!savePath.toLowerCase().endsWith(".txt")) {
+                            savePath += ".txt";
                         }
-                    } else {
-                        JOptionPane.showMessageDialog(frame, "Invalid file format.");
+                        calculator.writeCourseResults(savePath);
+                        JOptionPane.showMessageDialog(frame, "Grades calculated and written to " + savePath);
                     }
                 } catch (IOException ex) {
-                    JOptionPane.showMessageDialog(frame, "Invalid file format.");
+                    // Handle exception here if needed
                 }
             }
         });
