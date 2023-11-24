@@ -82,7 +82,7 @@ public class MainApplication {
                         JOptionPane.showMessageDialog(frame, "Grades calculated and written to " + savePath);
                     }
                 } catch (IOException ex) {
-                    // Handle exception here if needed
+                    // Handle the exception
                 }
             }
         });
