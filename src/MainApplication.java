@@ -64,11 +64,15 @@ public class MainApplication {
                 GradeCalculator calculator = new GradeCalculator();
                 try {
                     calculator.readStudents(studentFilePath);
-                    calculator.readCourseGrades(courseGradeFilePath);
+                    boolean courseSuccessful = calculator.readCourseGrades(courseGradeFilePath);
+                    if (!courseSuccessful) {
+                        return;
+                    }
+
                     boolean calculationSuccessful = calculator.calculateFinalGrades();
                     if (!calculationSuccessful) {
                         return;
-                    }
+    }
                     JFileChooser chooser = new JFileChooser();
                     FileNameExtensionFilter filter = new FileNameExtensionFilter("TEXT FILES", "txt", "text");
                     chooser.setFileFilter(filter);

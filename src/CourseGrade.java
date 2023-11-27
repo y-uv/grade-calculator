@@ -4,6 +4,8 @@ public class CourseGrade {
     private int[] testGrades = new int[3];
     private int finalExamGrade;
 
+    // Demonstrating Encapsulation
+    
     public CourseGrade(String studentId, String courseCode, int[] testGrades, int finalExamGrade) {
         this.studentId = studentId;
         this.courseCode = courseCode;

@@ -14,6 +14,7 @@ public void readStudents(String filename) throws IOException {
     while ((line = reader.readLine()) != null) {
         String[] parts = line.split(", ");
         if (parts.length < 2) {
+            //for debugging
             System.out.println("Skipping line with fewer than 2 parts: " + line);
             continue;
         }
@@ -22,13 +23,17 @@ public void readStudents(String filename) throws IOException {
     reader.close();
 }
 
-public void readCourseGrades(String filename) throws IOException {
+public boolean readCourseGrades(String filename) {
     try (BufferedReader reader = new BufferedReader(new FileReader(filename))) {
         String line;
         while ((line = reader.readLine()) != null) {
             try {
                 String[] parts = line.split(", ");
-                if (parts.length < 5 || !isNumeric(parts[2]) || !isNumeric(parts[3]) || !isNumeric(parts[4]) || !isNumeric(parts[5])) {
+                if (parts.length != 6) { // check if the number of elements is not 6
+                    JOptionPane.showMessageDialog(null, "Invalid file format.", "Error", JOptionPane.INFORMATION_MESSAGE);
+                    return false;
+                }
+                if (!isNumeric(parts[2]) || !isNumeric(parts[3]) || !isNumeric(parts[4]) || !isNumeric(parts[5])) {
                     throw new IOException("Invalid file format");
                 }
                 int[] testGrades = {Integer.parseInt(parts[2]), Integer.parseInt(parts[3]), Integer.parseInt(parts[4])};
@@ -37,6 +42,9 @@ public void readCourseGrades(String filename) throws IOException {
                 throw new IOException("Invalid file format", e);
             }
         }
+        return true; // return true if the operation was successful
+    } catch (IOException e) {
+        return false; // return false if an exception was thrown
     }
 }
 
