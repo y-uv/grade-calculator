@@ -69,7 +69,9 @@ private boolean isNumeric(String str) {
     public void writeCourseResults(String filename) throws IOException {
         BufferedWriter writer = new BufferedWriter(new FileWriter(filename));
         for (CourseResult courseResult : courseResults) {
-            writer.write(courseResult.getStudentId() + ", " + courseResult.getStudentName() + ", " + courseResult.getCourseCode() + ", " + courseResult.getFinalGrade());
+            double finalGrade = courseResult.getFinalGrade();
+            String formattedFinalGrade = String.format("%.2f", finalGrade);
+            writer.write(courseResult.getStudentId() + ", " + courseResult.getStudentName() + ", " + courseResult.getCourseCode() + ", " + formattedFinalGrade);
             writer.newLine();
         }
         writer.close();
